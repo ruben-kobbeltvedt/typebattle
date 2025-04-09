@@ -36,14 +36,19 @@ export function useGameState(initialText: string, initialCountdown: number = 30)
 
   const wpm = computed(() => {
     const wordsTyped = currentIndex.value / AVG_WORD_LENGTH;
-    const minutes = countdown.value / SECONDS_IN_MINUTE;
-    return Math.floor(wordsTyped / minutes);
+    const minutes = (initialCountdown - countdown.value) / SECONDS_IN_MINUTE;
+    return Math.floor(wordsTyped / (minutes || 1));
   })
 
   // Listen to keyboard events.
   useEventListener('keydown', (e: KeyboardEvent) => {
     // If the game is completed, do nothing.
     if (completed.value) {
+        return;
+    }
+
+    // check if character is a letter, space, or backspace.
+    if (!/^[a-zA-Z\s]$/.test(e.key) && e.key !== 'Backspace') {
         return;
     }
 
@@ -68,6 +73,11 @@ export function useGameState(initialText: string, initialCountdown: number = 30)
     const expected = letters[currentIndex.value]
     if (key !== expected) {
         errorIndeces.value.push(currentIndex.value);
+    }
+
+    // Check if this is the last character of the text.
+    if (currentIndex.value === letters.length - 1) {
+        pause();
     }
 
     currentIndex.value++

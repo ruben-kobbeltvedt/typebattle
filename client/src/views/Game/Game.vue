@@ -4,6 +4,9 @@
         <div class="flex-1 flex items-center justify-center">
             <div class="flex flex-col justify-start gap-11 p-32">
                 <GameCountdown :seconds="state.countdown" />
+                <span class="text-white">
+{{ state.wpm.value }} WPM
+                </span>
                 <div>
                     <GameLetter
                         :letter="letter"
