@@ -1,39 +1,29 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
-  word: string
+  currentWord: string
 }>();
 
-const emit = defineEmits(['completed'])
-
-
-const inputField = ref<HTMLInputElement | null>(null);
+const emit = defineEmits(['completedWord'])
 
 const inputValue = ref('');
 
 watch(inputValue, (newValue) => {
-  if (newValue === props.word) {
-    emit('completed');
+  if (newValue === props.currentWord) {
+    emit('completedWord');
     inputValue.value = '';
   }
-});
-
-onMounted(() => {
-  inputField.value?.focus();
 });
 
 </script>
 
 <template>
-  <h1></h1>
-
-  <div class="card">
+  <div>
     <input
-      ref="inputField"
-      :placeholder="props.word"
+      :placeholder="props.currentWord"
       type="text"
-      class="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="px-4 py-2 focus:border-none w-full border-none"
       v-model="inputValue"
     />
   </div>
