@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import InputField from './components/InputField.vue';
 import WordsToType from './components/WordsToType.vue';
+import ShuffleWordsButton from './components/ShuffleWordsButton.vue';
 
 const words = [
   'banana', 'avocado', 'supernova', 'hologram', 'syntax', 'quantum',
@@ -32,8 +33,9 @@ const handleCompletedWord = () => {
 
 <template>
   <div>
-    <WordsToType :words="words" />
-    <InputField :word="words[0]" @completed="handleCompletedWord" />
+    <ShuffleWordsButton @shuffleWords="shuffleWords" />
+    <WordsToType :words="displayedWords" />
+    <InputField :word="displayedWords[0]" @completed="handleCompletedWord" />
   </div>
 </template>
 
