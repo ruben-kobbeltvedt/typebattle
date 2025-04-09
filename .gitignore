@@ -1,0 +1,13 @@
+# Node
+client/node_modules
+client/dist
+client/.env
+
+# .NET
+server/bin
+server/obj
+server/*.db
+
+# General
+.env
+*.log
