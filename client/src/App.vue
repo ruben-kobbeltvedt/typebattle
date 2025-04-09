@@ -13,15 +13,15 @@ const words = [
 
 const displayedWords = ref<string[]>([])
 
+onMounted(() => {
+  shuffleWords()
+})
+
 function shuffleWords() {
   displayedWords.value = [...words]
     .sort(() => 0.5 - Math.random())
     .slice(0, 20)
 }
-
-onMounted(() => {
-  shuffleWords()
-})
 
 const handleCompletedWord = () => {
   displayedWords.value.shift()
@@ -35,21 +35,6 @@ const handleCompletedWord = () => {
   <div>
     <ShuffleWordsButton @shuffleWords="shuffleWords" />
     <WordsToType :words="displayedWords" />
-    <InputField :word="displayedWords[0]" @completed="handleCompletedWord" />
+    <InputField :currentWord="displayedWords[0]" @completedWord="handleCompletedWord" />
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
