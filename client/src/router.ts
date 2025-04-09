@@ -1,7 +1,7 @@
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 
 import Landing from './views/Landing.vue'
-import Game from './views/Game.vue'
+import Game from './views/Game/Game.vue'
 import Leaderboard from './views/Leaderboard.vue'
 
 const routes = [
