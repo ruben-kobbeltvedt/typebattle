@@ -16,6 +16,8 @@ declare module 'vue' {
     UApp: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/App.vue')['default']
     ULinkBase: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue')['default']
     UTable: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Table.vue')['default']
+    UBadge: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/Badge.vue')['default']
+    ULinkBase: typeof import('./node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue')['default']
     WordsToType: typeof import('./src/components/WordsToType.vue')['default']
   }
 }
