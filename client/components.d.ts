@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     GameView: typeof import('./src/components/GameView.vue')['default']
     InputField: typeof import('./src/components/InputField.vue')['default']
+    Letter: typeof import('./src/components/Letter.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ShuffleWordsButton: typeof import('./src/components/ShuffleWordsButton.vue')['default']
