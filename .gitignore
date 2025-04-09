@@ -11,3 +11,4 @@ server/*.db
 # General
 .env
 *.log
+*.d.ts
