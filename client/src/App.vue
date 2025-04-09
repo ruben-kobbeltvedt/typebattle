@@ -1,5 +1,6 @@
 <template>
-    <UApp>
-      <router-view></router-view>
-    </UApp>
+  <UApp>
+    <Menu />
+    <router-view></router-view>
+  </UApp>
 </template>
