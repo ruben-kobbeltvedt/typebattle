@@ -1,7 +1,12 @@
 <template>
-    <Navigation />
-    <div class="bg-(--ui-bg-elevated) border-2 border-(--ui-border-muted) rounded-md h-full flex m-10">
-        <UTable  :data="data" :columns="columns" class="flex-1" />
+  	<div class="bg-[#2C2C2C] flex flex-col w-screen h-screen">
+      <Navigation class="px-32 pt-8" />
+      <div class="flex flex-col">
+        <h1 class="text-white text-xl ml-10">Vinnertavlen :)</h1>
+        <div class="border-2 border-[#B0B0B0] rounded-md h-full flex mx-10 my-2">
+            <UTable  :data="data" :columns="columns" class="flex-1" td="text-white" :ui="{td: 'text-white', th: 'text-white'}" />
+        </div>
+      </div>
     </div>
 </template>
 
