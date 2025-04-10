@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-[#2c2c2c] h-auto">
-    <Navigation class="px-32 pt-8" />
-    <div class="flex flex-col ml-2 left">
+  <div class="bg-[#2c2c2c] h-screen px-32 py-8 flex flex-col gap-11 overflow-auto">
+    <Navigation />
+    <div class="flex flex-col flex-1 w-full">
       <Account v-if="session" :session="session" />
       <Auth v-else />
     </div>

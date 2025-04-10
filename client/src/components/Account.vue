@@ -116,9 +116,10 @@ async function signOut() {
 </script>
 
 <template>
-  <div class="mt-10 ml-10">
-    <h1 class="mb-10 text-white" style="font-size: 20px">Info om deg <3</h1>
-    <div style="float: right; margin-right: 125px; margin-top: -50px">
+  <div class="w-full">
+    <div class="flex justify-between">
+      <h1 class="mb-10 text-white" style="font-size: 20px">Info om deg <3</h1>
+      <div>
         <UButton 
           class="button block"
           color="error"
@@ -127,6 +128,7 @@ async function signOut() {
           Logg ut
         </UButton>
       </div>
+    </div>
     <form class="space-y-3 text-white" @submit.prevent="updateProfile">
       <div>
         <label for="email" class="block text-sm/6 font-medium">
