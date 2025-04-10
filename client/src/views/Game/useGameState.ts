@@ -1,5 +1,6 @@
 import { ref, computed, type Ref, onMounted, watch } from 'vue';
 import { useCountdown, useEventListener } from '@vueuse/core';
+import { supabase } from '../../supabase';
 
 export interface GameState {
     letters: Ref<string[]>;
@@ -41,7 +42,31 @@ export function useGameState(initialCountdown: number = 30): GameState {
     pause,
     isActive: running,
   } = useCountdown(initialCountdown);
+
   const completed = computed(() => countdown.value === 0 || currentIndex.value === letters.value.length);
+
+  watch(() => completed.value, () => {
+    if (!completed.value) return;
+    pause();
+    uploadHighscore().then(() => {
+        console.log("Highscore uploaded!");
+    });
+  });
+
+  const uploadHighscore = async () => {
+    console.log("Uploading highscore...");
+    const sessionResponse = await supabase.auth.getSession()
+    const user = sessionResponse.data.session?.user;
+
+    await supabase
+        .from("profiles")
+        .update({ 
+            high_score: wpm.value,
+            high_score_updated_at: new Date(),
+        })
+        .lt("high_score", wpm.value)
+        .eq("id", user.id);
+    }
 
   const AVG_WORD_LENGTH = 4.5;
   const SECONDS_IN_MINUTE = 60;
