@@ -13,6 +13,7 @@ declare module 'vue' {
     Avatar: typeof import('./src/components/Avatar.vue')['default']
     GameView: typeof import('./src/components/GameView.vue')['default']
     InputField: typeof import('./src/components/InputField.vue')['default']
+    Logo: typeof import('./src/components/Logo.vue')['default']
     Navigation: typeof import('./src/components/Navigation.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
