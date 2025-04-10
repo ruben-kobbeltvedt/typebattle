@@ -118,7 +118,7 @@ async function signOut() {
 <template>
   <div class="w-full">
     <div class="flex justify-between">
-      <h1 class="mb-10 text-white" style="font-size: 20px">Info om deg <3</h1>
+      <h1 class="text-white" style="font-size: 20px">Info om deg <3</h1>
       <div>
         <UButton 
           class="button block"
@@ -129,7 +129,7 @@ async function signOut() {
         </UButton>
       </div>
     </div>
-    <form class="space-y-3 text-white" @submit.prevent="updateProfile">
+    <form class="mt-4 space-y-3 text-white" @submit.prevent="updateProfile">
       <div>
         <label for="email" class="block text-sm/6 font-medium">
           E-postadresse
