@@ -4,70 +4,52 @@
       <div class="flex flex-col">
         <h1 class="text-white text-xl ml-10">Vinnertavlen :)</h1>
         <div class="border-2 border-[#B0B0B0] rounded-md h-full flex mx-10 my-2">
-            <UTable  :data="data" :columns="columns" class="flex-1" :ui="{td: 'text-white', th: 'text-white'}" />
+            <UTable  :data="dataWithRanking" :columns="columns" class="flex-1" :ui="{td: 'text-white', th: 'text-white'}" />
         </div>
       </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue';
+import { supabase } from '../supabase';
+import { useAsyncState } from '@vueuse/core';
 
 const columns: TableColumn[] = [
     {
         header: 'Nr.',
-        accessorKey: 'ranking',
+        accessorKey: 'index',
     },
     {
         header: 'Brukernavn',
-        accessorKey: 'name',
+        accessorKey: 'username',
     },
     {
         header: "Ord per minutt",
-        accessorKey: 'score',
+        accessorKey: 'high_score',
     },
     {
         header: 'Dato',
-        accessorKey: 'date',
+        accessorKey: 'high_score_updated_at',
     },
-]
+];
 
-const data = ref([
-    {
-        id: 1,
-        name: 'John Doe',
-        ranking: 1,
-        score: 100,
-        date: 'Mar 10, 19:45',
-    },
-    {
-        id: 2,
-        name: 'Jane Smith',
-        ranking: 2,
-        score: 90,
-        date: 'Mar 10, 15:55',
-    },
-    {
-        id: 3,
-        name: 'Alice Johnson',
-        ranking: 3,
-        score: 85,
-        date: 'Mar 11, 15:30',
-    },
-    {
-        id: 4,
-        name: 'Bob Brown',
-        ranking: 4,
-        score: 80,
-        date: 'Mar 11, 10:10',
-    },
-    {
-        id: 5,
-        name: 'Charlie Davis',
-        ranking: 5,
-        score: 75,
-        date: 'Mar 11, 15:30',
-    },
-])
+const data = useAsyncState(async () => await supabase
+    .from('profiles')
+    .select('id, username, avatar_url, high_score, high_score_updated_at')
+    .order('high_score', { ascending: false })
+    .limit(10), [])
+
+const dataWithRanking = computed(() => {
+    return data.state.value.data?.map((item, index) => ({
+        ...item,
+        index: index + 1,
+        high_score_updated_at: new Date(item.high_score_updated_at).toLocaleDateString('no-NO', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }),
+    }));
+});
 
 </script>
