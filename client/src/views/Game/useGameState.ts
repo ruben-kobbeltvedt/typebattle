@@ -15,7 +15,7 @@ export interface GameState {
 async function fetchRandomWords(count: number): Promise<string[]> {
     const response = await fetch('/words.json');
     const words = await response.json();
-    const flatWords = words.map((word: any) => word[1]);
+    const flatWords = words.map((word: any) => word);
     const randomWords = [];
     for (let i = 0; i < count; i++) {
         const randomIndex = Math.floor(Math.random() * flatWords.length);
