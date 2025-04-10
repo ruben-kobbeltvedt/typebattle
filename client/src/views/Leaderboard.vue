@@ -4,7 +4,7 @@
       <div class="flex flex-col">
         <h1 class="text-white text-xl ml-10">Vinnertavlen :)</h1>
         <div class="border-2 border-[#B0B0B0] rounded-md h-full flex mx-10 my-2">
-            <UTable  :data="data" :columns="columns" class="flex-1" td="text-white" :ui="{td: 'text-white', th: 'text-white'}" />
+            <UTable  :data="data" :columns="columns" class="flex-1" :ui="{td: 'text-white', th: 'text-white'}" />
         </div>
       </div>
     </div>
@@ -26,6 +26,10 @@ const columns: TableColumn[] = [
         header: "Ord per minutt",
         accessorKey: 'score',
     },
+    {
+        header: 'Dato',
+        accessorKey: 'date',
+    },
 ]
 
 const data = ref([
@@ -34,30 +38,35 @@ const data = ref([
         name: 'John Doe',
         ranking: 1,
         score: 100,
+        date: 'Mar 10, 19:45',
     },
     {
         id: 2,
         name: 'Jane Smith',
         ranking: 2,
         score: 90,
+        date: 'Mar 10, 15:55',
     },
     {
         id: 3,
         name: 'Alice Johnson',
         ranking: 3,
         score: 85,
+        date: 'Mar 11, 15:30',
     },
     {
         id: 4,
         name: 'Bob Brown',
         ranking: 4,
         score: 80,
+        date: 'Mar 11, 10:10',
     },
     {
         id: 5,
         name: 'Charlie Davis',
         ranking: 5,
         score: 75,
+        date: 'Mar 11, 15:30',
     },
 ])
 
