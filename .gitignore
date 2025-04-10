@@ -11,4 +11,4 @@ server/*.db
 # General
 .env
 *.log
-*.d.ts
+components.d.ts
