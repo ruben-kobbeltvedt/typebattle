@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref } from 'vue';
+import { h } from 'vue';
 import { supabase } from '../supabase';
 import { computedAsync, useAsyncState } from '@vueuse/core';
 
