@@ -1,10 +1,10 @@
 <template>
-  	<div class="bg-[#2C2C2C] flex flex-col w-screen h-screen">
-      <Navigation class="px-32 pt-8" />
-      <div class="flex flex-col">
-        <h1 class="text-white text-xl ml-10">Vinnertavlen</h1>
-        <div class="border-2 border-[#B0B0B0] rounded-md h-full flex mx-10 my-2">
-            <UTable  :data="dataWithRanking" :columns="columns" class="flex-1" :ui="{td: 'text-white', th: 'text-white'}" />
+  	<div class="bg-[#2C2C2C] flex flex-col gap-11 w-screen h-screen px-32 py-8">
+        <Navigation />
+      <div class="flex flex-col flex-1 gap-2">
+        <h1 class="text-white text-xl">Vinnertavlen</h1>
+            <div class="border-2 border-[#B0B0B0] rounded-md h-full flex">
+            <UTable  :data="dataWithRanking" class="flex-1" :columns="columns" :ui="{td: 'text-white', th: 'text-white'}" />
         </div>
       </div>
     </div>
