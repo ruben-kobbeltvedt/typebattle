@@ -1,4 +1,4 @@
-import { ref, computed, type Ref } from 'vue';
+import { ref, computed, type Ref, onMounted, watch } from 'vue';
 import { useCountdown, useEventListener } from '@vueuse/core';
 
 export interface GameState {
@@ -76,13 +76,8 @@ useEventListener('keydown', (e: KeyboardEvent) => {
 
     if (e.key === 'Backspace') {
         currentIndex.value = Math.max(0, currentIndex.value - 1);
-
         // Remove the last error index if it is the current index.
-        const errorIndex = errorIndeces.value.indexOf(currentIndex.value);
-        if (errorIndex !== -1) {
-            errorIndeces.value.splice(errorIndex, 1);
-        }
-        return;
+        return removeErrorIndex(currentIndex.value);
     }
 
     // Check if this is the last character of the text.
@@ -96,9 +91,20 @@ useEventListener('keydown', (e: KeyboardEvent) => {
     currentIndex.value++;
 });
 
+const removeErrorIndex = (index: number) => {
+    const errorIndex = errorIndeces.value.indexOf(index);
+    if (errorIndex !== -1) {
+        errorIndeces.value.splice(errorIndex, 1);
+    }
+    return errorIndex !== -1;
+}
+
 const hasErrorAtIndex = (index: number) => {
     return errorIndeces.value.includes(index);
 }
+
+onMounted(async () => await initializeWords(20));
+watch(() => currentIndex, async () => await updateWords());
 
   return {
     letters,
@@ -107,9 +113,6 @@ const hasErrorAtIndex = (index: number) => {
     completed,
     countdown,
     wpm,
-    initializeWords,
-    updateWords,
     hasErrorAtIndex,
-    errorIndeces,
   };
 }

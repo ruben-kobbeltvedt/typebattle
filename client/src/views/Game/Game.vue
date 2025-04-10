@@ -29,13 +29,4 @@ import GameLetter from './GameLetter.vue';
 import { useGameState } from './useGameState';
 
 const state = useGameState();
-
-onMounted(async () => {
-    await state.initializeWords(20);
-    console.log('Mounted', state.letters);
-});
-
-watch(() => state.currentIndex, async () => {
-    await state.updateWords();
-});
 </script>
