@@ -8,9 +8,14 @@ import { computed } from 'vue'
 interface Props {
   letter: string
   written: boolean
+  error: boolean
 }
 
 const props = defineProps<Props>()
 
-const colorClass = computed(() => props.written ? 'text-white' : 'text-[#B0B0B0]');
+const colorClass = computed(() => {
+  if (props.error) return 'text-red-500'
+  if (props.written) return 'text-white'
+  return 'text-[#B0B0B0]'
+});
 </script>

@@ -33,6 +33,7 @@ async function fetchRandomWords(count: number): Promise<string[]> {
  */
 export function useGameState(initialCountdown: number = 30): GameState {
   const letters = ref<string[]>([]);
+  const errorIndeces = ref<number[]>([]);
   const currentIndex = ref(0);
   const { 
     remaining: countdown, 
@@ -42,7 +43,7 @@ export function useGameState(initialCountdown: number = 30): GameState {
   } = useCountdown(initialCountdown);
   const completed = computed(() => countdown.value === 0 || currentIndex.value === letters.value.length);
 
-  const AVG_WORD_LENGTH = 5;
+  const AVG_WORD_LENGTH = 4.5;
   const SECONDS_IN_MINUTE = 60;
 
   const wpm = computed(() => {
@@ -69,7 +70,7 @@ useEventListener('keydown', (e: KeyboardEvent) => {
     // If the game is completed, do nothing.  
     if (completed.value) return;
     // check if character is a letter, space, or backspace.
-    if (!/^[a-zA-Z\s]$/.test(e.key) && e.key !== 'Backspace') return;
+    if (!/^[a-zA-ZæøåÆØÅ\s]$/.test(e.key) && e.key !== 'Backspace') return;
     // Start game on the first key press.
     if (!running.value) start();
 
@@ -83,11 +84,21 @@ useEventListener('keydown', (e: KeyboardEvent) => {
         }
         return;
     }
+
     // Check if this is the last character of the text.
     if (currentIndex.value === letters.value.length - 1) pause();
 
+    if (letters.value[currentIndex.value] !== e.key) {
+        errorIndeces.value.push(currentIndex.value);
+    }
+        
+
     currentIndex.value++;
 });
+
+const hasErrorAtIndex = (index: number) => {
+    return errorIndeces.value.includes(index);
+}
 
   return {
     letters,
@@ -98,5 +109,7 @@ useEventListener('keydown', (e: KeyboardEvent) => {
     wpm,
     initializeWords,
     updateWords,
+    hasErrorAtIndex,
+    errorIndeces,
   };
 }

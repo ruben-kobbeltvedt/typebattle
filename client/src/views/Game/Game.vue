@@ -11,6 +11,7 @@
                     <GameLetter
                         :letter="letter"
                         :written="index < state.currentIndex.value"
+                        :error="state.hasErrorAtIndex(index)"
                         v-for="(letter, index) in state.letters.value"
                         :key="index"
                     />
