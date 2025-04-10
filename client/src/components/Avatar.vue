@@ -38,14 +38,6 @@ watchEffect(() => {
 </script>
 <template>
   <div>
-    <img
-      v-if="src"
-      :src="src"
-      alt="Avatar"
-      class="avatar image"
-      :style="{ height: size + 'em', width: size + 'em' }"
-    />
-    <div v-else class="avatar no-image" :style="{ height: size + 'em', width: size + 'em' }"></div>
     <div>
       <UInput
         type="file"
@@ -54,6 +46,13 @@ watchEffect(() => {
         :disabled="uploading"
       />
     </div>
+    <img
+      v-if="src && !previewImage"
+      :src="src"
+      alt="Avatar"
+      class="avatar image"
+      :style="{ height: size + 'em', width: size + 'em' }"
+    />
     <img
       v-if="previewImage"
       :src="previewImage"

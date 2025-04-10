@@ -104,7 +104,8 @@ async function signOut() {
 </script>
 
 <template>
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  <div class="mt-10 ml-10">
+    <h1 class="mb-10">Info om deg <3</h1>
     <form class="space-y-6" @submit.prevent="updateProfile">
       <div>
         <label for="email" class="block text-sm/6 font-medium">
