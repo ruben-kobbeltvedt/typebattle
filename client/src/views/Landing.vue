@@ -1,8 +1,24 @@
 <template>
-  <div class="bg-[#2C2C2C] w-screen h-screen">
-    <Navigation class="px-32 pt-8"/>
-    <div class="flex flex-col items-center justify-center">
-      <h1 class="text-white text-4xl mb-8">Welcome to the Typing Game!</h1>
-    </div>
-  </div>
+  <Navigation />
+    This is the landing page of the game.
+    <Account v-if="session" :session="session" />
+    <Auth v-else />
 </template>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import Account from '../components/Account.vue';
+import Auth from '../components/Auth.vue';
+import { supabase } from '../supabase';
+
+const session = ref();
+
+onMounted(() => {
+  supabase.auth.getSession().then(({ data }) => {
+    session.value = data.session;
+  });
+  supabase.auth.onAuthStateChange((_, _session) => {
+    session.value = _session;
+  });
+});
+</script>
