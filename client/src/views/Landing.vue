@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#2c2c2c] h-screen">
+  <div class="bg-[#2c2c2c] h-auto">
     <Navigation class="px-32 pt-8" />
     <div class="flex flex-col ml-2 left">
       <Account v-if="session" :session="session" />
