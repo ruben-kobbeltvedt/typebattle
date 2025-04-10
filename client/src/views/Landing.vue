@@ -1,8 +1,11 @@
 <template>
-  <Navigation />
-    This is the landing page of the game.
-    <Account v-if="session" :session="session" />
-    <Auth v-else />
+  <div class="bg-[#2c2c2c] h-screen">
+    <Navigation class="px-32 pt-8" />
+    <div class="flex flex-col ml-2 left">
+      <Account v-if="session" :session="session" />
+      <Auth v-else />
+    </div>
+  </div>
 </template>
 
 <script setup>
