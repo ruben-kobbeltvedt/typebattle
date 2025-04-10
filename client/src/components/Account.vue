@@ -51,13 +51,23 @@ async function updateProfile() {
 
   if (avatarFile.value) {
     const fileExt = avatarFile.value.name.split('.').pop();
-    avatar_url.value = `${user.id}.${fileExt}`;
-    const { error: uploadError } = await supabase
-      .storage
-      .from('avatars')
-      .upload(avatar_url.value, avatarFile.value);
+    const filePath = `${user.id}.${fileExt}`;
+    if (!avatar_url.value) {
+      const { error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(filePath, avatarFile.value);
+      if (uploadError) throw uploadError;
+    } else {
+      const { error: updateError } = await supabase
+        .storage
+        .from('avatars')
+        .update(filePath, avatarFile.value);
+      if (uploadError) throw uploadError;
+    }
 
-    if (uploadError) throw uploadError;
+    
+    avatar_url.value = filePath;
   }
 
   try {
