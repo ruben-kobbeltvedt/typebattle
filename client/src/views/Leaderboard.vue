@@ -2,7 +2,7 @@
   	<div class="bg-[#2C2C2C] flex flex-col gap-11 w-screen h-screen px-32 py-8">
         <Navigation />
       <div class="flex flex-col flex-1 gap-2">
-        <h1 class="text-white text-xl">Vinnertavlen</h1>
+        <h1 class="text-white text-xl font-medium">Vinnertavlen</h1>
             <div class="border-2 border-[#B0B0B0] rounded-md h-full flex">
             <UTable  :data="dataWithRanking" class="flex-1" :columns="columns" :ui="{td: 'text-white', th: 'text-white'}" />
         </div>

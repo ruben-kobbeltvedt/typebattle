@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-start w-full h-full relative">
+    <div class="flex justify-center relative h-full w-full">
         <div class="absolute flex flex-col justify-start gap-11">
             <span ref="gameOverRef" class="text-[#B82BFF] font-mono text-5xl font-semibold">GAME OVER</span>
             <div ref="gameRef" class="flex flex-col justify-start gap-11">
