@@ -46,19 +46,51 @@ watchEffect(() => {
         :disabled="uploading"
       />
     </div>
-    <img
-      v-if="src && !previewImage"
-      :src="src"
-      alt="Avatar"
-      class="avatar image"
-      :style="{ height: size + 'em', width: size + 'em' }"
-    />
-    <img
-      v-if="previewImage"
-      :src="previewImage"
-      alt="Avatar"
-      class="avatar image"
-      :style="{ height: size + 'em', width: size + 'em' }"
-    />
+    <div class="h-[171px] w-[345px] border fucktailwind">
+      <div v-if="src && !previewImage" class="avatar-container">
+        <img
+          :src="src"
+          alt="Avatar"
+          class="avatar image"
+          :style="{ height: size + 'em', width: size + 'em' }"
+        />
+      </div>
+
+      <div v-if="previewImage" class="avatar-container">
+        <img
+          :src="previewImage"
+          alt="Avatar"
+          class="avatar image"
+          :style="{ height: size + 'em', width: size + 'em' }"
+        />
+      </div>
+
+    </div>
   </div>
 </template>
+
+<style scoped>
+.fucktailwind {
+  margin-top: 20px;
+  border-radius: 14px;
+  border-color: #888888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.avatar-container {
+  height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .avatar-container > img {
+  
+} */
+</style>

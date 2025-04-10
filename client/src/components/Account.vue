@@ -105,8 +105,17 @@ async function signOut() {
 
 <template>
   <div class="mt-10 ml-10">
-    <h1 class="mb-10">Info om deg <3</h1>
-    <form class="space-y-6" @submit.prevent="updateProfile">
+    <h1 class="mb-10 text-white" style="font-size: 20px">Info om deg <3</h1>
+    <div style="float: right; margin-right: 125px; margin-top: -50px">
+        <UButton 
+          class="button block"
+          color="error"
+          @click="signOut"
+        >
+          Logg ut
+        </UButton>
+      </div>
+    <form class="space-y-3 text-white" @submit.prevent="updateProfile">
       <div>
         <label for="email" class="block text-sm/6 font-medium">
           E-postadresse
@@ -125,28 +134,19 @@ async function signOut() {
         </div>
       </div>
 
-      <div>
-        <Avatar @changeYeet="yeet" size="5" :path="avatar_url" />
+      <div class="mt-5">
+        <label for="avtr" class="block text-sm/6 font-medium mb-2">Profilbilde</label>
+        <Avatar id="avtr" @changeYeet="yeet" size="5" :path="avatar_url" />
       </div>
 
       <div>
         <UButton
           type="submit"
-          class="button primary block"
-          :value="loading ? 'Lagrer...' : 'Lagre'"
+          class="button block"
+          style="background-color: #B82BFF"
           :disabled="loading"
         >
-          Yeet
-        </UButton>
-      </div>
-
-      <div>
-        <UButton 
-          class="button block"
-          color="error"
-          @click="signOut"
-        >
-          Logg ut
+          {{ loading ? 'Lagrer...' : 'Lagre' }}
         </UButton>
       </div>
     </form>
