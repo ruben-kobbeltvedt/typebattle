@@ -1,4 +1,5 @@
 <template>
+    <Navigation />
     <div class="bg-(--ui-bg-elevated) border-2 border-(--ui-border-muted) rounded-md h-full flex m-10">
         <UTable  :data="data" :columns="columns" class="flex-1" />
     </div>

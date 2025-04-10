@@ -5,13 +5,13 @@
             <div class="flex flex-col justify-start gap-11 p-32">
                 <GameCountdown :seconds="state.countdown" />
                 <span class="text-white">
-{{ state.wpm.value }} WPM
+                    {{ state.wpm }} WPM
                 </span>
                 <div>
                     <GameLetter
                         :letter="letter"
                         :written="index < state.currentIndex.value"
-                        v-for="(letter, index) in state.letters"
+                        v-for="(letter, index) in state.letters.value"
                         :key="index"
                     />
                 </div>
@@ -21,13 +21,20 @@
 </template>
 
 <script setup lang="ts">
-import Navigation from "../../components/Navigation.vue";
-import GameCountdown from "./GameCountdown.vue";
-import GameLetter from "./GameLetter.vue";
-import { ref, computed } from "vue";
-import { useGameState } from "./useGameState";
+import { onMounted, watch } from 'vue';
+import Navigation from '../../components/Navigation.vue';
+import GameCountdown from './GameCountdown.vue';
+import GameLetter from './GameLetter.vue';
+import { useGameState } from './useGameState';
 
-const input = "Dette en telefon skal kunne hoppe fra sånn er denne reisen med kalkun gjennom flere runder i norge";
+const state = useGameState();
 
-const state = useGameState(input);
+onMounted(async () => {
+    await state.initializeWords(20);
+    console.log('Mounted', state.letters);
+});
+
+watch(() => state.currentIndex, async () => {
+    await state.updateWords();
+});
 </script>
