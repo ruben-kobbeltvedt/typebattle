@@ -2,6 +2,7 @@
 import { supabase } from '../supabase';
 import { onMounted, ref, toRefs } from 'vue';
 import Avatar from './Avatar.vue';
+import type { ToastProps } from '@nuxt/ui'
 
 const props = defineProps(['session']);
 const { session } = toRefs(props);
@@ -10,6 +11,13 @@ const loading = ref(true);
 const username = ref('');
 const avatarFile = ref(null);
 const avatar_url = ref('');
+const toast = useToast();
+
+function showToast() {
+  toast.add(<ToastProps>{
+    title: 'Lagret',
+  });
+}
 
 onMounted(() => {
   getProfile();
@@ -48,7 +56,7 @@ function yeet(file: File) {
 
 async function updateProfile() {
   const { user } = session.value;
-
+  loading.value = true;
   if (avatarFile.value) {
     const fileExt = avatarFile.value.name.split('.').pop();
     const filePath = `${user.id}.${fileExt}`;
@@ -57,22 +65,25 @@ async function updateProfile() {
         .storage
         .from('avatars')
         .upload(filePath, avatarFile.value);
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        loading.value = false;
+        throw uploadError;
+      };
     } else {
       const { error: updateError } = await supabase
         .storage
         .from('avatars')
         .update(filePath, avatarFile.value);
-      if (uploadError) throw uploadError;
+      if (updateError) {
+        loading.value = false;
+        throw uploadError;
+      };
     }
 
-    
     avatar_url.value = filePath;
   }
 
   try {
-    loading.value = true;
-
     const updates = {
       id: user.id,
       username: username.value,
@@ -83,6 +94,7 @@ async function updateProfile() {
     const { error } = await supabase.from('profiles').upsert(updates);
 
     if (error) throw error;
+    showToast();
   } catch (error) {
     alert(error.message);
   } finally {
