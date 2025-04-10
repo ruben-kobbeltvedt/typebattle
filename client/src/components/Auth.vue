@@ -25,61 +25,44 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <!-- <form class="row flex-center flex" @submit.prevent="handleLogin">
-    <div class="col-6 form-widget">
-      <h1 class="header">TYPEBATTLE</h1>
-      <p class="description">Magic link yeet</p>
-      <div>
-        <input class="inputField" required type="email" placeholder="E-postadresse" v-model="email" />
-      </div>
-      <div>
-        <input
-          type="submit"
-          class="button block"
-          :value="loading ? 'Sender...' : 'Send magic link'"
-          :disabled="loading"
-        />
-      </div>
+  <div class="flex min-h-full flex-col px-6 py-12 lg:px-8">
+    <div class="sm:w-full sm:max-w-sm">
+      <h2 class="mt-10 text-[#E0E0E0] text-center text-2xl/9 font-bold tracking-tight">
+        Kom i gang 🚀
+      </h2>
     </div>
-  </form> -->
 
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight">
-      TYPEBATTLE
-    </h2>
-  </div>
-
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6">
-      <div>
-        <label for="email" class="block text-sm/6 font-medium">
-          E-postadresse
-        </label>
-        <div class="mt-2">
-          <UInput 
-            type="email"
-            name="email"
-            id="email"
-            autocomplete="email"
-            v-model="email"
-            required
-          />
+    <div class="sm:w-full sm:max-w-sm">
+      <form class="space-y-6">
+        <div>
+          <div class="mt-2">
+            <UFormField label="E-postadresse" class=""
+            >
+              <UInput
+                class="bg-[#2c2c2c] border border-[#888888] rounded"
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                v-model="email"
+                required
+              />
+            </UFormField>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <UButton 
-          type="submit"
-          color="primary"
-          class="flex w-full justify-center px-3 py-1.5"
-          @click="handleLogin"
-          :disabled="loading"
-        >
-          {{loading ? 'Sender...' : 'Send magic link'}}
-        </UButton>
-      </div>
-    </form>
+        <div>
+          <UButton 
+            type="submit"
+            color="primary"
+            class="flex w-[9.1875rem] justify-center px-3 py-1.5"
+            @click="handleLogin"
+            :disabled="loading"
+          >
+            {{loading ? 'Sender...' : 'Send magic link'}}
+          </UButton>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </template>
