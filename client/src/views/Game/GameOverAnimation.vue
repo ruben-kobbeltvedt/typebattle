@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center relative h-full w-full">
         <div class="absolute flex flex-col justify-start gap-11">
-            <span ref="gameOverRef" class="text-[#B82BFF] font-mono text-5xl font-semibold">GAME OVER</span>
+            <span ref="gameOverRef" class="text-[#B82BFF] font-mono text-5xl font-semibold">{{ getRandomCompleteMessage() }}</span>
             <div ref="gameRef" class="flex flex-col justify-start gap-11">
                 <GameText :state="state" />
             </div>
@@ -10,7 +10,7 @@
             <span ref="resultRef" class="text-[#B82BFF] opacity-0 font-mono text-9xl font-semibold">Resultat</span>
             <div ref="statistics" class="flex flex-col gap-11">
                 <div class="inline-flex items-end  gap-8">
-                    <span ref="wpmRef" class="text-white text-4xl opacity-0"> {{ state.wpm }} WPM </span>
+                    <span ref="wpmRef" class="text-white text-4xl opacity-0"> {{ state.wpm }} WPM</span>
                     <span ref="wpmMessageRef" class="text-xl text-[#B0B0B0] opacity-0">Du er så flink! 😎</span>
                 </div>
                 <div ref="rankingRef" class="inline-flex gap-2 text-4xl opacity-0">
@@ -31,6 +31,7 @@ import { animate, createSpring, createTimeline } from 'animejs';
 import { onMounted, ref, useTemplateRef } from 'vue';
 import GameText from './GameText.vue';
 import type { useGameState } from './useGameState';
+import { getRandomCompleteMessage } from './completeMessages';
 
 interface Props {
     state: ReturnType<typeof useGameState>;
