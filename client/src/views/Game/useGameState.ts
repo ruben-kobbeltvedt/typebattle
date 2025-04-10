@@ -80,6 +80,8 @@ useEventListener('keydown', (e: KeyboardEvent) => {
         return removeErrorIndex(currentIndex.value);
     }
 
+    if (errorIndeces.value.length > 0 && letters.value[currentIndex.value] === ' ') return;
+
     // Check if this is the last character of the text.
     if (currentIndex.value === letters.value.length - 1) pause();
 
