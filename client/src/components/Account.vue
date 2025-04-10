@@ -1,12 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { supabase } from '../supabase';
 import { onMounted, ref, toRefs } from 'vue';
+import Avatar from './Avatar.vue';
 
 const props = defineProps(['session']);
 const { session } = toRefs(props);
 
 const loading = ref(true);
 const username = ref('');
+const avatarFile = ref(null);
 const avatar_url = ref('');
 
 onMounted(() => {
@@ -37,10 +39,29 @@ async function getProfile() {
   }
 }
 
+function yeet(file: File) {
+  avatarFile.value = file ? file : null;
+  const { user } = session.value;
+  const fileExt = avatarFile.value.name.split('.').pop();
+  console.log(`${user.id}.${fileExt}`);
+}
+
 async function updateProfile() {
+  const { user } = session.value;
+
+  if (avatarFile.value) {
+    const fileExt = avatarFile.value.name.split('.').pop();
+    avatar_url.value = `${user.id}.${fileExt}`;
+    const { error: uploadError } = await supabase
+      .storage
+      .from('avatars')
+      .upload(avatar_url.value, avatarFile.value);
+
+    if (uploadError) throw uploadError;
+  }
+
   try {
     loading.value = true;
-    const { user } = session.value;
 
     const updates = {
       id: user.id,
@@ -73,27 +94,50 @@ async function signOut() {
 </script>
 
 <template>
-  <form class="form-widget" @submit.prevent="updateProfile">
-    <div>
-      <label for="email">E-postadresse</label>
-      <input id="email" type="text" :value="session.user.email" disabled />
-    </div>
-    <div>
-      <label for="username">Navn</label>
-      <input id="username" type="text" v-model="username" />
-    </div>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form class="space-y-6" @submit.prevent="updateProfile">
+      <div>
+        <label for="email" class="block text-sm/6 font-medium">
+          E-postadresse
+        </label>
+        <div class="mt-2">
+          <UInput id="email" type="text" :value="session.user.email" disabled />
+        </div>
+      </div>
 
-    <div>
-      <input
-        type="submit"
-        class="button primary block"
-        :value="loading ? 'Lagrer...' : 'Lagre'"
-        :disabled="loading"
-      />
-    </div>
+      <div>
+        <label for="email" class="block text-sm/6 font-medium">
+          Navn
+        </label>
+        <div class="mt-2">
+          <UInput id="username" type="text" v-model="username" />
+        </div>
+      </div>
 
-    <div>
-      <button class="button block" @click="signOut" :disabled="loading">Logg ut</button>
-    </div>
-  </form>
+      <div>
+        <Avatar @changeYeet="yeet" size="5" :path="avatar_url" />
+      </div>
+
+      <div>
+        <UButton
+          type="submit"
+          class="button primary block"
+          :value="loading ? 'Lagrer...' : 'Lagre'"
+          :disabled="loading"
+        >
+          Yeet
+        </UButton>
+      </div>
+
+      <div>
+        <UButton 
+          class="button block"
+          color="error"
+          @click="signOut"
+        >
+          Logg ut
+        </UButton>
+      </div>
+    </form>
+  </div>
 </template>

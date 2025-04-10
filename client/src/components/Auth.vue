@@ -4,6 +4,7 @@ import { supabase } from '../supabase';
 
 const loading = ref(false);
 const email = ref('');
+const emailSent = ref(false);
 
 const handleLogin = async () => {
   try {
@@ -50,7 +51,7 @@ const handleLogin = async () => {
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
+    <form class="space-y-6">
       <div>
         <label for="email" class="block text-sm/6 font-medium">
           E-postadresse
@@ -69,8 +70,10 @@ const handleLogin = async () => {
 
       <div>
         <UButton 
+          type="submit"
           color="primary"
           class="flex w-full justify-center px-3 py-1.5"
+          @click="handleLogin"
           :disabled="loading"
         >
           {{loading ? 'Sender...' : 'Send magic link'}}
