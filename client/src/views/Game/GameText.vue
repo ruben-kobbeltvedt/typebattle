@@ -1,6 +1,6 @@
 <template>
     <div ref="containerRef">
-        <div class="absolute w-[2px] h-[3rem] bg-[#B82BFF]" ref="cursorRef"></div>
+        <div v-if="!state.completed.value" class="absolute w-[2px] h-[3rem] bg-[#B82BFF]" ref="cursorRef"></div>
         <GameLetter
             :id="`letter-${index}`"
             :letter="letter"
