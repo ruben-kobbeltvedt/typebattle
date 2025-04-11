@@ -105,6 +105,7 @@ useEventListener('keydown', (e: KeyboardEvent) => {
         return removeErrorIndex(currentIndex.value);
     }
 
+    if (letters.value[currentIndex.value] === ' ' && e.key !== ' ') return;
     if (errorIndeces.value.length > 0 && letters.value[currentIndex.value] === ' ') return;
 
     // Check if this is the last character of the text.
