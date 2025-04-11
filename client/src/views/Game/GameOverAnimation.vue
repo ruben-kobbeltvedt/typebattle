@@ -15,11 +15,11 @@
                 </div>
                 <div ref="rankingRef" class="inline-flex gap-2 text-4xl opacity-0">
                     <span class="text-[#B0B0B0]">Plassering: </span>
-                    <span class="text-white">30 plass</span>
+                    <span class="text-white">{{ ranking }} plass</span>
                 </div>
                 <div ref="personalRankingRef" class="inline-flex gap-2 text-4xl opacity-0">
                     <span class="text-[#B0B0B0]">Personlig rekord: </span>
-                    <span class="text-white">128 wpm</span>
+                    <span class="text-white">{{ highscore }} wpm</span>
                 </div>
             </div>
         </div>
@@ -27,17 +27,80 @@
 </template>
 
 <script setup lang="ts">
-import { animate, createSpring, createTimeline } from 'animejs';
+import { createSpring, createTimeline } from 'animejs';
 import { onMounted, ref, useTemplateRef } from 'vue';
 import GameText from './GameText.vue';
 import type { useGameState } from './useGameState';
 import { getRandomCompleteMessage } from './completeMessages';
+import { supabase } from '../../supabase';
 
 interface Props {
     state: ReturnType<typeof useGameState>;
     seconds: number
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
+
+const ranking = ref<number | null>();
+const highscore = ref<number | null>();
+
+const getHighscoreAsync = async () => {
+    const sessionResponse = await supabase.auth.getSession()
+    const user = sessionResponse.data.session?.user;
+
+    const { data } = await supabase
+        .from('profiles')
+        .select('high_score')
+        .eq('id', user.id)
+        .single();
+
+    const highscore = data?.high_score || 0;
+
+    return highscore;
+}
+
+const getRankingAsync = async () => {
+    const sessionResponse = await supabase.auth.getSession();
+    const user = sessionResponse.data.session?.user;
+
+    if (!user) return null;
+
+    // First: get the user's own high score
+    const { data: myScoreData, error: scoreError } = await supabase
+        .from('profiles')
+        .select('high_score')
+        .eq('id', user.id)
+        .single();
+
+    if (scoreError || !myScoreData) {
+        console.error('Error fetching user score:', scoreError);
+        return null;
+    }
+
+    const myScore = myScoreData.high_score;
+
+    // Second: count how many users have a higher score
+    const { count, error: countError } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .gt('high_score', myScore);
+
+    if (countError) {
+        console.error('Error counting higher scores:', countError);
+        return null;
+    }
+
+
+    // Rank is count of higher scores + 1
+    const rank = (count ?? 0) + 1;
+
+    return rank;
+};
+
+onMounted(async () => {
+    highscore.value = await getHighscoreAsync();
+    ranking.value = await getRankingAsync();
+    console.log(highscore.value, ranking.value);
+});
 
 const gameOverRef = useTemplateRef<HTMLElement>('gameOverRef');
 const resultRef = useTemplateRef<HTMLElement>('resultRef');

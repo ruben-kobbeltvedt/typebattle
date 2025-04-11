@@ -55,7 +55,8 @@ const columns: TableColumn[] = [
 const data = useAsyncState(async () => await supabase
     .from('profiles')
     .select('id, username, avatar_url, high_score, high_score_updated_at')
-    .order('high_score_updated_at, high_score', { ascending: false })
+    .order('high_score', { ascending: false })
+    .order('high_score_updated_at', { ascending: true })
     .limit(10), []);
 
 const dataWithRanking = computedAsync(() => {
