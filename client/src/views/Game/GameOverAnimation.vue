@@ -11,7 +11,7 @@
             <div ref="statistics" class="flex flex-col gap-11">
                 <div class="inline-flex items-end  gap-8">
                     <span ref="wpmRef" class="text-white text-4xl opacity-0"> {{ state.wpm }} WPM</span>
-                    <span ref="wpmMessageRef" class="text-xl text-[#B0B0B0] opacity-0">Du er så flink! 😎</span>
+                    <span ref="wpmMessageRef" class="text-xl text-[#B0B0B0] opacity-0">{{ getRandomWpmMessage(state.wpm.value, highscore) }}</span>
                 </div>
                 <div ref="rankingRef" class="inline-flex gap-2 text-4xl opacity-0">
                     <span class="text-[#B0B0B0]">Plassering: </span>
@@ -32,6 +32,7 @@ import { onMounted, ref, useTemplateRef } from 'vue';
 import GameText from './GameText.vue';
 import type { useGameState } from './useGameState';
 import { getRandomCompleteMessage } from './completeMessages';
+import { getRandomWpmMessage } from './wpmCommentMessages';
 import { supabase } from '../../supabase';
 
 interface Props {

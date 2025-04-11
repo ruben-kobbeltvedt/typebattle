@@ -130,7 +130,7 @@ const hasErrorAtIndex = (index: number) => {
     return errorIndeces.value.includes(index);
 }
 
-onMounted(async () => await initializeWords(5));
+onMounted(async () => await initializeWords(30));
 watch(() => currentIndex, async () => await updateWords());
 
   return {
