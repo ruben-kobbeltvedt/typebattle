@@ -13,5 +13,11 @@
 <script setup lang="ts">
 import Logo from './Logo.vue';
 
-const reload = () => location.reload();
+const reload = () => {
+    // check if /game is running, if so, reload the page
+    const currentPath = window.location.pathname;
+    if (currentPath === '/game') {
+        window.location.reload();
+    }
+}
 </script>
