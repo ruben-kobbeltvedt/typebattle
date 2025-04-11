@@ -25,43 +25,34 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col px-6 py-12 lg:px-8">
-    <div class="sm:w-full sm:max-w-sm">
-      <h2 class="mt-10 text-[#E0E0E0] text-center text-2xl/9 font-bold tracking-tight">
-        Kom i gang 🚀
-      </h2>
-    </div>
+  <div class="flex min-h-full flex-col px-6 py-12 lg:px-8 justify-center">
+    <div class="ml-[9.25rem]">
+      <form>
+        <Logo class="h-[2.8125rem] w-[18.70994rem] mb-[1.25rem]" />
+        <span class="text-base text-[#E0E0E0] text-center w-[18.1875rem] mb-[1.25rem]">
+          Kom i gang. Lag en bruker og test dine skrive ferdigheter.
+        </span>
+        <UFormField label="E-postaddresse" class="flex flex-col space-y-2 mt-4" text="#E0E0E0" required>
+          <UInput
+            type="email"
+            name="email"
+            id="email"
+            autocomplete="email"
+            color="#888888"
+            v-model="email"
+            required
 
-    <div class="sm:w-full sm:max-w-sm">
-      <form class="space-y-6">
-        <div>
-          <div class="mt-2">
-            <UFormField label="E-postadresse" class=""
-            >
-              <UInput
-                class="bg-[#2c2c2c] border border-[#888888] rounded"
-                type="email"
-                name="email"
-                id="email"
-                autocomplete="email"
-                v-model="email"
-                required
-              />
-            </UFormField>
-          </div>
-        </div>
-
-        <div>
-          <UButton 
-            type="submit"
-            color="primary"
-            class="flex w-[9.1875rem] justify-center px-3 py-1.5"
-            @click="handleLogin"
-            :disabled="loading"
-          >
-            {{loading ? 'Sender...' : 'Send magic link'}}
-          </UButton>
-        </div>
+          />
+        </UFormField>
+        <UButton 
+          type="submit"
+          color="primary"
+          class="flex w-[7.6875rem] justify-center mt-4 bg-[#B82BFF] disabled:bg-[#B82BFF] hover:bg-[#B82BFF]"
+          @click="handleLogin"
+          :disabled="loading"
+        >
+          {{loading ? 'Sender epost...' : 'Registrer deg her'}}
+        </UButton>
       </form>
     </div>
   </div>
