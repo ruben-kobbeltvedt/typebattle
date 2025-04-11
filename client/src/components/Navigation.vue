@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-between items-center gap-3">
-        <router-link to="/game" class="h-full flex items-center gap-3">
+        <router-link to="/game" @click="reload" class="h-full flex items-center gap-3">
             <Logo />
         </router-link>
         <div class="flex items-center gap-3">
@@ -12,4 +12,6 @@
 
 <script setup lang="ts">
 import Logo from './Logo.vue';
+
+const reload = () => location.reload();
 </script>
