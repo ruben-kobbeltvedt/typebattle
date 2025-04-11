@@ -2,6 +2,7 @@
     <div class="flex flex-col justify-start gap-11">
         <GameCountdown  :seconds="state.countdown" />
         <GameText :state="state" />
+        <span class="mx-auto text-[#B0B0B0] text-xl">{  begynn å skrive  }</span> 
     </div>
 </template>
 
